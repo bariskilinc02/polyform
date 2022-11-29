@@ -3681,6 +3681,8 @@ MonoBehaviour:
   Boxs: []
   Units: []
   GetRays: []
+  RaycasterUnitsX: []
+  RaycasterUnitsY: []
   BoxCounterParentsX: []
   BoxCounterParentsY: []
   BoxCounterTextsX: []
@@ -3689,11 +3691,14 @@ MonoBehaviour:
   LineDeletersY: []
   GroundUnitPrefab: {fileID: 4195951891265954710, guid: 1fa8398db1d3c694cb8f4b1c36dc2fc8,
     type: 3}
+  RaycasterPrefab: {fileID: 298604408257662187, guid: f4968183c60963c42964ea3656244bc8,
+    type: 3}
   LevelMainParent: {fileID: 0}
   BoxsParent: {fileID: 0}
   GroundUnitParent: {fileID: 312028383}
-  RaycastersParent: {fileID: 0}
+  RaycastersParent: {fileID: 1977674970}
   CurrentLevelIndex: 0
+  CurrentGridLength: 0
   CreationCenterPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1079414554
 GameObject:
