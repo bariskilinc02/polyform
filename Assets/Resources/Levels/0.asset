@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d3d91a3d771bb418be622a6154776e, type: 3}
   m_Name: 0
   m_EditorClassIdentifier: 
-  GridLength: 5
-  Grids: []
+  GridLength: 3
+  Grids:
+  - {x: 0, y: 2}
+  - {x: 2, y: 0}
+  - {x: 2, y: 0}
   SolutionBinary: 

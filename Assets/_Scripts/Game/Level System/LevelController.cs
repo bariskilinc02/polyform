@@ -11,8 +11,8 @@ public class LevelController : MonoBehaviour
     private Level currentLevel;
 
     #region Level Components
-    public List<GameObject> GroundUnits;
-    public List<GameObject> Boxs;
+    public List<GroundUnit> GroundUnits;
+    public List<Box> Boxs;
 
 
     public List<GroundUnit> Units, GetRays;
@@ -107,7 +107,8 @@ public class LevelController : MonoBehaviour
             for (int b = 0; b < CurrentGridLength; b++)
             {
                 GameObject newGroundUnit = InstantiateBehaviour.InstantiateGameObject(GroundUnitPrefab, GroundUnitParent.transform, placementVector);
-                GroundUnits.Add(newGroundUnit);
+                newGroundUnit.GetComponent<GroundUnit>().SetPositionIndex(a, b);
+                GroundUnits.Add(newGroundUnit.GetComponent<GroundUnit>());
 
                 placementVector += new Vector3(1f, 0, 0);
             }
@@ -154,8 +155,8 @@ public class LevelController : MonoBehaviour
             if (currentLevel.Grids[i].y == 0)
                 raycasterUnit.isActive = false;
 
-            BoxCounterParentsX.Add(newRaycasterUnit);
-            RaycasterUnitsX.Add(raycasterUnit);
+            BoxCounterParentsY.Add(newRaycasterUnit);
+            RaycasterUnitsY.Add(raycasterUnit);
 
             placementVectorY = new Vector3(placementVectorY.x + 1, 0, CreationCenterPosition.z + 1);
         }

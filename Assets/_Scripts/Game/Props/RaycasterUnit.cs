@@ -19,13 +19,14 @@ public class RaycasterUnit : MonoBehaviour
 
     [Space]
     [Header("Fields")]
-    public bool isActive;
-    public int id;
-    private int RayCount;
-    public  bool RaycasterDirection; //X or Y
 
+    public int id;
+    public bool RaycasterDirection; //X or Y
+
+    public bool isActive;
     public int HitCount;
 
+    private int RayCount;
 
     private void Init()
     {
@@ -41,8 +42,6 @@ public class RaycasterUnit : MonoBehaviour
         for (int i = 0; i < this.RayCount; i++)
         {
             GameObject newRay = InstantiateBehaviour.InstantiateGameObjectLocal(RaycastPrefab, transform, new Vector3(0, i + 0.5f, 0));
-            //GameObject NewRaycaster = Instantiate(RaycastPrefab, gameObject.transform);
-            //NewRaycaster.transform.localPosition = new Vector3(NewRaycaster.transform.localPosition.x, i + 0.5f, NewRaycaster.transform.localPosition.z);
             newRay.name = i.ToString();
             Rays.Add(newRay);
         }
