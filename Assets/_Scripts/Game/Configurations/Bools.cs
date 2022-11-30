@@ -10,6 +10,7 @@ public class Bools : MonoBehaviour
     public bool isLevelCompleted; 
     public bool isLevelTransition;
     public bool isDeleteLineMode;
+    public bool isOnCreateMode;
 
     private void Awake()
     {

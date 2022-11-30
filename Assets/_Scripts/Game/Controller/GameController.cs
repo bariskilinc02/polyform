@@ -30,7 +30,8 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(LevelController.IsLevelFinished());
+        if (Bools.isOnCreateMode) return;
+
         if (LevelController.IsLevelFinished() && Bools.isLevelTransition == false)
         {
             StartCoroutine(ToNextLevel());

@@ -8,6 +8,7 @@ public class LevelController : MonoBehaviour
 {
     private LevelCreator levelCreator;
     private ObjectPool ObjectPool;
+    private Bools Bools;
 
     public List<Level> Levels;
     public Level currentLevel;
@@ -53,6 +54,7 @@ public class LevelController : MonoBehaviour
 
         levelCreator = FindObjectOfType<LevelCreator>();
         ObjectPool = FindObjectOfType<ObjectPool>();
+        Bools = FindObjectOfType<Bools>();
     }
     private void Awake()
     {
@@ -65,6 +67,10 @@ public class LevelController : MonoBehaviour
     }
     private void Update()
     {
+        if (Bools.isOnCreateMode)
+        {
+
+        }
     }
     #endregion
 
@@ -284,6 +290,48 @@ public class LevelController : MonoBehaviour
             
         }
         return isLevelFinished;
+    }
+    #endregion
+
+    #region Level Create Mode
+    public void UpdateCounters()
+    {
+        for (int i = 0; i < CountersX.Count; i++)
+        {
+            if (RaycasterUnitsX[i].BoxsOnRow.Count == levelCreator.GridLength)
+            {
+                CountersX[i].transform.GetChild(0).transform.GetComponent<TextMeshPro>().text = RaycasterUnitsX[i].HitCount.ToString();
+            }
+            else
+            {
+                CountersX[i].transform.GetChild(0).transform.GetComponent<TextMeshPro>().text = "0";
+            }
+          
+        }
+
+        for (int i = 0; i < CountersY.Count; i++)
+        {
+            if (RaycasterUnitsY[i].BoxsOnRow.Count == levelCreator.GridLength)
+            {
+                CountersY[i].transform.GetChild(0).transform.GetComponent<TextMeshPro>().text = RaycasterUnitsY[i].HitCount.ToString();
+            }
+            else
+            {
+                CountersY[i].transform.GetChild(0).transform.GetComponent<TextMeshPro>().text = "0";
+            }
+          
+        }
+    }
+
+    public void RecreateGrids(int gridLength, Level level)
+    {
+        currentLevel = level;
+        CurrentGridLength = gridLength;
+        DestroyAllLevelObjects();
+        CreateGroundUnits();
+        CreateRaycasterUnits();
+        CreateCounterUnits();
+
     }
     #endregion
 }
