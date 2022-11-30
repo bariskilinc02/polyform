@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class CameraController : MonoBehaviour
 {
+    private Bools Bools;
 
     #region CameraTPS
     [Header("TPSLook")]
@@ -33,6 +34,8 @@ public class CameraController : MonoBehaviour
     public void Init()
     {
         Cursor.lockState = (autoLockCursor) ? CursorLockMode.Locked : CursorLockMode.None;
+
+        Bools = FindObjectOfType<Bools>();
     }
 
     private void Start()
@@ -42,7 +45,10 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        CameraTPSLook();
+        if (Bools.is_OnTransition == true || Bools.is_InMenu == true) return;
+
+        if(Input.GetMouseButton(1))
+            CameraTPSLook();
     }
     #endregion
 

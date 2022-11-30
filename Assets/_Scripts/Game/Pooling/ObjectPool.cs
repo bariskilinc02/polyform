@@ -30,6 +30,7 @@ public class ObjectPool : MonoBehaviour
     public void AddObjectToPool(GameObject addedObject)
     {
         addedObject.transform.parent = PoolParent.transform;
+        addedObject.layer = 2;
         addedObject.SetActive(false);
         BoxPool.Add(addedObject);
     }

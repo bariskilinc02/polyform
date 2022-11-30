@@ -7,18 +7,17 @@ using TMPro;
 public class LevelController : MonoBehaviour
 {
     private LevelCreator levelCreator;
+    private ObjectPool ObjectPool;
 
     public List<Level> Levels;
-    private Level currentLevel;
+    public Level currentLevel;
 
     #region Level Components
     public List<GroundUnit> GroundUnits;
     public List<Box> Boxs;
 
-
-    public List<GroundUnit> Units, GetRays;
     public List<RaycasterUnit> RaycasterUnitsX, RaycasterUnitsY;
-    public List<GameObject> CountersX, CountersY, BoxCounterTextsX, BoxCounterTextsY;
+    public List<GameObject> CountersX, CountersY;
     public List<LineDeleterUnit> LineDeletersX, LineDeletersY;
     #endregion
 
@@ -53,12 +52,17 @@ public class LevelController : MonoBehaviour
         Levels = Resources.LoadAll<Level>("Levels").ToList();
 
         levelCreator = FindObjectOfType<LevelCreator>();
+        ObjectPool = FindObjectOfType<ObjectPool>();
     }
     private void Awake()
     {
         Init();
     }
 
+    private void Start()
+    {
+        CreateLevel();
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
@@ -75,21 +79,28 @@ public class LevelController : MonoBehaviour
         CurrentGridLength = currentLevel.GridLength;
     }
 
+    public void GetNextLevel()
+    {
+        CurrentLevelIndex += 1;
+        currentLevel = Levels[CurrentLevelIndex];
+        CurrentGridLength = currentLevel.GridLength;
+    }
+
     private void ClearAllComponents()
     {
+        GroundUnits.Clear();
         Boxs.Clear();
+        RaycasterUnitsX.Clear();
+        RaycasterUnitsY.Clear();
         CountersX.Clear();
         CountersY.Clear();
-        BoxCounterTextsX.Clear();
-        BoxCounterTextsY.Clear();
         LineDeletersX.Clear();
         LineDeletersY.Clear();
     }
 
 
     #region Create State
-   [ContextMenu("Create Level")]
-    private void CreateLevel()
+    public void CreateLevel()
     {
         GetActiveLevel();
         ClearAllComponents();
@@ -202,9 +213,72 @@ public class LevelController : MonoBehaviour
     #endregion
 
     #region Destroy State
-    private void DestroyAllLevelObjects()
+    public void DestroyAllLevelObjects()
     {
+        foreach(GroundUnit Unit in GroundUnits)
+        {
+            Destroy(Unit.gameObject);
+        }
 
+        foreach (Box Unit in Boxs)
+        {
+            ObjectPool.AddObjectToPool(Unit.gameObject);
+        }
+
+        foreach (RaycasterUnit Unit in RaycasterUnitsX)
+        {
+            Destroy(Unit.gameObject);
+        }
+
+
+        foreach (RaycasterUnit Unit in RaycasterUnitsY)
+        {
+            Destroy(Unit.gameObject);
+        }
+
+        foreach (GameObject Unit in CountersX)
+        {
+            Destroy(Unit);
+        }
+
+        foreach (GameObject Unit in CountersY)
+        {
+            Destroy(Unit);
+        }
+
+
+        ClearAllComponents();
+    }
+    #endregion
+
+    #region GamePlay State
+    public bool IsLevelFinished()
+    {
+        bool isLevelFinished = true;
+        for (int i = 0; i < CurrentGridLength; i++)
+        {
+            if (currentLevel.Grids[i].x != 0)
+            {
+                if (currentLevel.Grids[i].x != RaycasterUnitsX[i].HitCount || RaycasterUnitsX[i].HeightOfBoxsOnRow.Count != CurrentGridLength)
+                {
+                    isLevelFinished = false;
+                    break;
+                }
+            }
+
+            if (currentLevel.Grids[i].y != 0)
+            {
+                if (currentLevel.Grids[i].y != RaycasterUnitsY[i].HitCount || RaycasterUnitsY[i].HeightOfBoxsOnRow.Count != CurrentGridLength)
+                {
+                    isLevelFinished = false;
+                    break;
+
+                }
+            }
+
+            
+        }
+        return isLevelFinished;
     }
     #endregion
 }
