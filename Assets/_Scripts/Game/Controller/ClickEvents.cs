@@ -79,7 +79,7 @@ public class ClickEvents : MonoBehaviour
                 box.Effect(accesableHeight);
 
                 MovingBox.SetActive(true);
-                MovingBox.transform.position = Vector3.Lerp(MovingBox.transform.position, BoxPosition, 0.3f);
+                MovingBox.transform.position = Vector3.Lerp(MovingBox.transform.position, BoxPosition, 0.2f);
 
                 if (accesableHeight >= LevelController.CurrentGridLength)
                     MovingBox.SetActive(false);

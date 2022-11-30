@@ -65,11 +65,6 @@ public class LevelController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            CreateLevel();
-        }
-        
     }
     #endregion
 
@@ -183,6 +178,11 @@ public class LevelController : MonoBehaviour
         {
             GameObject newCounter = InstantiateBehaviour.InstantiateGameObject(CounterPrefab, CounterParent.transform, placementVectorX);
 
+            LineDeleterUnit lineDeleter = newCounter.GetComponent<LineDeleterUnit>();
+            lineDeleter.Raycaster = RaycasterUnitsX[i];
+            lineDeleter.X_or_Y = false;
+            lineDeleter.Id = i;
+
             newCounter.transform.GetChild(0).transform.GetComponent<TextMeshPro>().text = currentLevel.Grids[i].x.ToString();
 
             CountersX.Add(newCounter);
@@ -195,6 +195,11 @@ public class LevelController : MonoBehaviour
         for (int i = 0; i < CurrentGridLength; i++)
         {
             GameObject newCounter = InstantiateBehaviour.InstantiateGameObject(CounterPrefab, CounterParent.transform, placementVectorY);
+
+            LineDeleterUnit lineDeleter = newCounter.GetComponent<LineDeleterUnit>();
+            lineDeleter.Raycaster = RaycasterUnitsY[i];
+            lineDeleter.X_or_Y = true;
+            lineDeleter.Id = i;
 
             newCounter.transform.GetChild(0).transform.GetComponent<TextMeshPro>().text = currentLevel.Grids[i].y.ToString();
 
