@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 public class LevelController : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class LevelController : MonoBehaviour
 
     public List<GroundUnit> Units, GetRays;
     public List<RaycasterUnit> RaycasterUnitsX, RaycasterUnitsY;
-    public List<GameObject> BoxCounterParentsX, BoxCounterParentsY, BoxCounterTextsX, BoxCounterTextsY;
+    public List<GameObject> CountersX, CountersY, BoxCounterTextsX, BoxCounterTextsY;
     public List<LineDeleterUnit> LineDeletersX, LineDeletersY;
     #endregion
 
@@ -26,6 +27,7 @@ public class LevelController : MonoBehaviour
     [Header("Prefabs")]
     public GameObject GroundUnitPrefab;
     public GameObject RaycasterPrefab;
+    public GameObject CounterPrefab;
 
     #endregion
     
@@ -35,6 +37,7 @@ public class LevelController : MonoBehaviour
     public GameObject BoxsParent;
     public GameObject GroundUnitParent;
     public GameObject RaycastersParent;
+    public GameObject CounterParent;
     #endregion
 
     #region Fields
@@ -75,8 +78,8 @@ public class LevelController : MonoBehaviour
     private void ClearAllComponents()
     {
         Boxs.Clear();
-        BoxCounterParentsX.Clear();
-        BoxCounterParentsY.Clear();
+        CountersX.Clear();
+        CountersY.Clear();
         BoxCounterTextsX.Clear();
         BoxCounterTextsY.Clear();
         LineDeletersX.Clear();
@@ -95,6 +98,7 @@ public class LevelController : MonoBehaviour
 
         CreateGroundUnits();
         CreateRaycasterUnits();
+        CreateCounterUnits();
 
     }
 
@@ -135,7 +139,6 @@ public class LevelController : MonoBehaviour
             if (currentLevel.Grids[i].x == 0)
                 raycasterUnit.isActive = false;
 
-            BoxCounterParentsX.Add(newRaycasterUnit);
             RaycasterUnitsX.Add(raycasterUnit);
 
             placementVectorX = new Vector3(CreationCenterPosition.x - 1, 0, placementVectorX.z - 1);
@@ -155,13 +158,40 @@ public class LevelController : MonoBehaviour
             if (currentLevel.Grids[i].y == 0)
                 raycasterUnit.isActive = false;
 
-            BoxCounterParentsY.Add(newRaycasterUnit);
             RaycasterUnitsY.Add(raycasterUnit);
 
             placementVectorY = new Vector3(placementVectorY.x + 1, 0, CreationCenterPosition.z + 1);
         }
     }
 
+    private void CreateCounterUnits()
+    {
+        //Create Counters On X
+        Vector3 placementVectorX = new Vector3(CreationCenterPosition.x - 1, 0, CreationCenterPosition.z);
+        for (int i = 0; i < CurrentGridLength; i++)
+        {
+            GameObject newCounter = InstantiateBehaviour.InstantiateGameObject(CounterPrefab, CounterParent.transform, placementVectorX);
+
+            newCounter.transform.GetChild(0).transform.GetComponent<TextMeshPro>().text = currentLevel.Grids[i].x.ToString();
+
+            CountersX.Add(newCounter);
+
+            placementVectorX = new Vector3(CreationCenterPosition.x - 1, 0, placementVectorX.z - 1);
+        }
+
+        //Create Counters On Y
+        Vector3 placementVectorY = new Vector3(CreationCenterPosition.x, 0, CreationCenterPosition.z + 1);
+        for (int i = 0; i < CurrentGridLength; i++)
+        {
+            GameObject newCounter = InstantiateBehaviour.InstantiateGameObject(CounterPrefab, CounterParent.transform, placementVectorY);
+
+            newCounter.transform.GetChild(0).transform.GetComponent<TextMeshPro>().text = currentLevel.Grids[i].y.ToString();
+
+            CountersY.Add(newCounter);
+
+            placementVectorY = new Vector3(placementVectorY.x + 1, 0, CreationCenterPosition.z + 1);
+        }
+    }
     private void SetCreationCenterPosition()
     {
         int gridLength = currentLevel.GridLength;

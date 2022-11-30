@@ -1225,7 +1225,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1584054624}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &312501299
 GameObject:
@@ -3047,7 +3047,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1584054624}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &885487243
 GameObject:
@@ -3759,8 +3759,8 @@ MonoBehaviour:
   GetRays: []
   RaycasterUnitsX: []
   RaycasterUnitsY: []
-  BoxCounterParentsX: []
-  BoxCounterParentsY: []
+  CountersX: []
+  CountersY: []
   BoxCounterTextsX: []
   BoxCounterTextsY: []
   LineDeletersX: []
@@ -3769,13 +3769,47 @@ MonoBehaviour:
     type: 3}
   RaycasterPrefab: {fileID: 298604408257662187, guid: f4968183c60963c42964ea3656244bc8,
     type: 3}
+  CounterPrefab: {fileID: 5471406124875369318, guid: df996196a6810ec47a942a088f9c298f,
+    type: 3}
   LevelMainParent: {fileID: 0}
   BoxsParent: {fileID: 0}
   GroundUnitParent: {fileID: 312028383}
   RaycastersParent: {fileID: 1977674970}
+  CounterParent: {fileID: 1075894281}
   CurrentLevelIndex: 0
   CurrentGridLength: 0
   CreationCenterPosition: {x: 0, y: 0, z: 0}
+--- !u!1 &1075894281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1075894282}
+  m_Layer: 0
+  m_Name: Counters
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1075894282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075894281}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1584054624}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1079414554
 GameObject:
   m_ObjectHideFlags: 0
@@ -6093,6 +6127,7 @@ Transform:
   m_Children:
   - {fileID: 1325350070}
   - {fileID: 1977674971}
+  - {fileID: 1075894282}
   - {fileID: 877973210}
   - {fileID: 312028384}
   m_Father: {fileID: 0}
@@ -6282,7 +6317,6 @@ MonoBehaviour:
   MovingBox: {fileID: 0}
   SelectedBox: {fileID: 0}
   BoxsParent: {fileID: 1325350069}
-  Slider: {fileID: 0}
 --- !u!1 &1702164192
 GameObject:
   m_ObjectHideFlags: 0
